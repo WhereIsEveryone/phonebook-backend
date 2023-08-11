@@ -1,9 +1,21 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const morgan = require('morgan')
+
+const requestLogger = (request, response, next) => {
+    console.log('Method:', request.method)
+    console.log('Path:  ', request.path)
+    console.log('Body:  ', request.body)
+    console.log('---')
+    next()
+  }
 
 app.use(express.json())
 app.use(cors({origin: "http://localhost:3000"}))
+app.use(requestLogger)
+morgan.token('content', function (req, res) { return JSON.stringify(req.body) })
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :content'))
 
 let persons = [
     {
@@ -25,6 +37,12 @@ let persons = [
 
   app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
+  })
+
+  app.get('/info', (req, res) => {
+    const personsSize = persons.length
+    const timeStamp = new Date()
+    res.send(`<p>Phonebook has info for ${personsSize} persons</p> <p>${timeStamp}</>`)
   })
   
   app.get('/persons', (req, res) => {
@@ -48,11 +66,16 @@ let persons = [
     response.status(204).end()
   })
 
-  const generateId = () => {
+  const generateIdBetter = () => {
     const maxId = persons.length > 0
       ? Math.max(...persons.map(n => n.id))
       : 0
     return maxId + 1
+  }
+
+  const generateId = () => {
+    const max = 1000000
+    return Math.floor(Math.random() * max);
   }
   
   app.post('/persons', (request, response) => {
@@ -62,6 +85,19 @@ let persons = [
       return response.status(400).json({ 
         error: 'name missing' 
       })
+    }
+
+    if (!body.number) {
+        return response.status(400).json({ 
+          error: 'number missing' 
+        })
+      }
+
+    const isListed = persons.find(person => person.name === body.name)
+    if (isListed) {
+        return response.status(400).json({ 
+            error: 'name is already on the list' 
+          })
     }
   
     const person = {
@@ -74,6 +110,12 @@ let persons = [
   
     response.json(person)
   })
+
+  const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+  }
+  
+  app.use(unknownEndpoint)
 
 const PORT = 3001
 app.listen(PORT, () => {
