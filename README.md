@@ -1,8 +1,8 @@
 # phonebook-backend
-A backend for the phonebook application
+A phonebook application
 
-Address to the live service:
+Address to the full live service:
 https://phonebook-service-7xyg.onrender.com/
 
-Get all persons:
+Get all persons from the backend:
 https://phonebook-service-7xyg.onrender.com/api/persons
