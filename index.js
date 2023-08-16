@@ -39,17 +39,17 @@ let persons = [
     res.send('<h1>Hello World!</h1>')
   })
 
-  app.get('/info', (req, res) => {
+  app.get('/api/info', (req, res) => {
     const personsSize = persons.length
     const timeStamp = new Date()
     res.send(`<p>Phonebook has info for ${personsSize} persons</p> <p>${timeStamp}</>`)
   })
   
-  app.get('/persons', (req, res) => {
+  app.get('/api/persons', (req, res) => {
     res.json(persons)
   })
 
-  app.get('/persons/:id', (request, response) => {
+  app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     const person = persons.find(person => person.id === id)
     if (person) {
@@ -59,8 +59,9 @@ let persons = [
       }
   })
 
-  app.delete('/persons/:id', (request, response) => {
+  app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
+    console.log(id)
     persons = persons.filter(person => person.id !== id)
   
     response.status(204).end()
@@ -78,7 +79,7 @@ let persons = [
     return Math.floor(Math.random() * max);
   }
   
-  app.post('/persons', (request, response) => {
+  app.post('/api/persons', (request, response) => {
     const body = request.body
   
     if (!body.name) {
