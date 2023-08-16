@@ -11,6 +11,7 @@ const requestLogger = (request, response, next) => {
     next()
   }
 
+app.use(express.static('build'))
 app.use(express.json())
 app.use(cors({origin: "http://localhost:3000"}))
 app.use(requestLogger)
