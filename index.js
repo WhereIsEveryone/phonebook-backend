@@ -25,6 +25,7 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :c
       const timeStamp = new Date()
       response.send(`<p>Phonebook has info for ${count} persons</p> <p>${timeStamp}</>`)
     })
+    .catch(error => next(error))
   })
 
   app.get('/api/persons', (request, response, next) => {
