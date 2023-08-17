@@ -20,8 +20,11 @@ app.use(requestLogger)
 morgan.token('content', function (req, res) { return JSON.stringify(req.body) })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :content'))
 
-  app.get('/', (req, res) => {
-    res.send('<h1>Hello World!</h1>')
+  app.get('/info', (request, response, next) => {
+    Person.count({}).then(count => {
+      const timeStamp = new Date()
+      response.send(`<p>Phonebook has info for ${count} persons</p> <p>${timeStamp}</>`)
+    })
   })
 
   app.get('/api/persons', (request, response, next) => {
