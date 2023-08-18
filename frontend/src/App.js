@@ -120,6 +120,11 @@ const App = () => {
           setNotificationMsg( {message: `Henkilön ${newName} lisäys onnistui`, success: true} )
           timeOut()
         })
+        .catch(error => {
+          console.log(error.response.data.error)
+          setNotificationMsg( {message: error.response.data.error, success: false} )
+          timeOut()
+        })
     }
   }
   
