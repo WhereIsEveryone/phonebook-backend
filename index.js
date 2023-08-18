@@ -15,7 +15,7 @@ const requestLogger = (request, response, next) => {
 
 app.use(express.static('build'))
 app.use(express.json())
-app.use(cors({origin: "http://localhost:3000"}))
+app.use(cors({origin: 'http://localhost:3000'}))
 app.use(requestLogger)
 morgan.token('content', function (req, res) { return JSON.stringify(req.body) })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :content'))
