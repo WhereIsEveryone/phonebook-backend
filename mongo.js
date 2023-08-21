@@ -16,30 +16,30 @@ mongoose.set('strictQuery', false)
 mongoose.connect(url)
 
 const personSchema = new mongoose.Schema({
-    name: String,
-    number: Number,
-  })
+  name: String,
+  number: Number,
+})
 
 const Person = mongoose.model('Person', personSchema)
 
 if (nameToAdd !== undefined) {
-    if (numberToAdd !== undefined) {
-        const person = new Person({
-            name: nameToAdd,
-            number: Number(numberToAdd)
-        })
-        person.save().then(result => {
-            console.log(`Henkilö ${nameToAdd}, numero ${numberToAdd} lisätty puhelinluetteloon`)
-            mongoose.connection.close()
-        })
-    }
+  if (numberToAdd !== undefined) {
+    const person = new Person({
+      name: nameToAdd,
+      number: Number(numberToAdd)
+    })
+    person.save().then(result => {
+      console.log(`Henkilö ${nameToAdd}, numero ${numberToAdd} lisätty puhelinluetteloon`)
+      mongoose.connection.close()
+    })
+  }
 }
 else {
-    Person.find({}).then(result => {
-        console.log('Puhelinluettelo:')
-        result.forEach(person => {
-          console.log(`${person.name} ${person.number}`) 
-        })
-        mongoose.connection.close()
+  Person.find({}).then(result => {
+    console.log('Puhelinluettelo:')
+    result.forEach(person => {
+      console.log(`${person.name} ${person.number}`) 
     })
+    mongoose.connection.close()
+  })
 }

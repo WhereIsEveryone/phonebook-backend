@@ -2,6 +2,6 @@ PUT http://localhost:3001/api/persons/64de0232d70d02bf2f3158e3
 Content-Type: application/json
 
 {
-    "name": "Ohto Otsola",
-    "number": 334423232
+  "name": "Ohto Otsola",
+  "number": 334423232
 }
