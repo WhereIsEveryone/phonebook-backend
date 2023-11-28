@@ -1,5 +1,5 @@
 # phonebook-backend
-A phonebook application
+A phonebook application. This repository includes the backend and the front-end code.
 
 Address to the full live service (please note that "waking up" the service can take time up to one minute):
 https://phonebook-service-7xyg.onrender.com/
